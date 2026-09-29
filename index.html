@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flame in Freefall — Microgravity Combustion Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="starfield"><canvas id="stars-canvas"></canvas></div>
+
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-brand"><span class="dot"></span> MISSION CONSOLE // FIF-01</div>
+  </div>
+  <div class="hud-mid">
+    <div class="hud-stat"><span class="led"></span> ISS TELEMETRY LINK: NOMINAL</div>
+    <div class="hud-stat"><span class="led"></span> DATASET: 8 EXPERIMENTS LOADED</div>
+    <div class="hud-stat"><span class="led" style="background:var(--flame-2); box-shadow:0 0 6px var(--flame-2);"></span> AI ENGINE: LOCAL / RULE-BASED</div>
+  </div>
+  <div class="hud-right" id="missionClock">T+00:00:00</div>
+</div>
+
+<nav class="navbar">
+  <a class="nav-pill" href="index.html">Home</a>
+  <a class="nav-pill" href="index.html#overview">Overview</a>
+  <a class="nav-pill" href="index.html#experiments">Experiments</a>
+  <a class="nav-pill" href="index.html#comparison">Comparison</a>
+  <a class="nav-pill accent" href="ai-analyst.html">AI Fire Analyst</a>
+  <a class="nav-pill" href="index.html#data-viz">Data</a>
+  <a class="nav-pill" href="index.html#moon-mars">Moon vs Mars</a>
+  <a class="nav-pill" href="index.html#knowledge-map">Knowledge Map</a>
+  <a class="nav-pill accent cyan" href="sources.html">Sources &amp; Team</a>
+</nav>
+
+<main>
+<section id="hero" class="wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-kicker"><span class="pulse"></span> AI-POWERED FIRE SAFETY RESEARCH TOOL</div>
+      <h1><span>FLAME IN</span><span class="grad">FREEFALL</span></h1>
+      <p class="hero-sub">AI-powered fire safety insights from microgravity combustion data. On Earth, hot gas rises and pulls fresh oxygen into a flame. Remove gravity, and that convection disappears — flames turn spherical, burn cooler, and can smoulder invisibly. Understanding this is essential before humans live on the Moon or Mars.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-scroll="experiments">Explore Research</button>
+        <a class="btn btn-ghost" href="ai-analyst.html">Launch AI Analysis</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b class="counter" data-count="8">0</b><span>NASA/JAXA EXPERIMENTS</span></div>
+        <div class="hero-stat"><b class="counter" data-count="17">0</b><span>YEARS OF ISS DATA</span></div>
+        <div class="hero-stat"><b class="counter" data-count="3">0</b><span>GRAVITY REGIMES MODELED</span></div>
+      </div>
+    </div>
+    <div class="hero-visual"><canvas id="heroFlameCanvas" width="440" height="440"></canvas></div>
+  </div>
+</section>
+
+<section id="meet-guide" class="wrap reveal" style="padding-top:56px; padding-bottom:56px;">
+  <div class="glass" style="padding:26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
+    <img src="mikojin-happy.png" alt="MikoJin" style="width:84px; height:84px; object-fit:contain; flex-shrink:0;">
+    <div style="flex:1; min-width:240px;">
+      <div class="eyebrow" style="margin-bottom:8px;">MEET YOUR GUIDE</div>
+      <h3 style="font-size:17px; margin-bottom:6px;">Hi, I'm MikoJin 👋</h3>
+      <p style="color:var(--text-dim); font-size:13.5px;">I'll pop up in the corner as you explore this mission console with quick tips on where to go and what each section means. Click my avatar any time for the next tip, or the ✕ to tuck me away.</p>
+    </div>
+  </div>
+</section>
+
+<section id="overview" class="wrap reveal">
+  <div class="eyebrow">01 · MISSION OVERVIEW</div>
+  <h2 class="sec-title">Why fire behaves like a different substance off-world</h2>
+  <p class="sec-lede">Four ideas explain almost everything that follows in this dashboard. Tap a card to expand it.</p>
+  <div class="overview-grid" id="overviewGrid"></div>
+</section>
+
+<section id="experiments" class="wrap reveal">
+  <div class="eyebrow">02 · EXPERIMENT EXPLORER</div>
+  <h2 class="sec-title">Search the NASA &amp; JAXA microgravity combustion record</h2>
+  <p class="sec-lede">Eight flagship investigations, mostly flown aboard the International Space Station, form the backbone of what we know about fire in space.</p>
+
+  <div class="explorer-controls">
+    <div class="search-box glass"><span>🔍</span><input id="expSearch" type="text" placeholder="Search experiments, fuels, tags…"></div>
+    <select class="filter-select" id="fuelFilter"><option value="">All fuels</option></select>
+    <select class="filter-select" id="platformFilter"><option value="">All platforms</option></select>
+    <select class="filter-select" id="riskFilter"><option value="">All risk levels</option></select>
+    <select class="filter-select" id="sortSelect">
+      <option value="relevance">Sort: Relevance</option>
+      <option value="year-desc">Sort: Newest</option>
+      <option value="year-asc">Sort: Oldest</option>
+      <option value="risk-desc">Sort: Risk (high→low)</option>
+    </select>
+  </div>
+  <div class="explorer-meta" id="expMeta"></div>
+  <div class="exp-grid" id="expGrid"></div>
+</section>
+
+<section id="comparison" class="wrap reveal">
+  <div class="eyebrow">03 · FLAME COMPARISON</div>
+  <h2 class="sec-title">Earth flame vs. microgravity flame</h2>
+  <p class="sec-lede">Buoyancy-driven convection is the difference-maker. Remove it, and every downstream property changes.</p>
+  <div class="compare-wrap">
+    <div class="flame-panel glass">
+      <h3>Earth — 1g</h3>
+      <div class="env-tag">Candle flame, sea-level air</div>
+      <canvas id="earthFlameCanvas" width="280" height="280"></canvas>
+    </div>
+    <div class="flame-panel glass">
+      <h3>Microgravity — ~0g</h3>
+      <div class="env-tag">ISS cabin, quiescent air</div>
+      <canvas id="microFlameCanvas" width="280" height="280"></canvas>
+    </div>
+  </div>
+  <table class="compare-table glass" id="compareTable"></table>
+</section>
+
+<section id="ai-analyst-teaser" class="wrap reveal">
+  <div class="eyebrow">04 · AI FIRE SAFETY ANALYST</div>
+  <h2 class="sec-title">Run a scenario through the local analysis engine</h2>
+  <p class="sec-lede">Set mission environment, fuel, oxygen, airflow, and enclosure conditions — a rule-based JavaScript model estimates a fire-risk profile and cites related NASA/JAXA experiments. It now lives on its own page for a bigger console view.</p>
+  <div class="glass" style="margin-top:32px; padding:32px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+    <div style="max-width:520px;">
+      <div class="ai-label" style="margin-bottom:10px;">AI SIMULATION / RESEARCH ASSISTANT</div>
+      <p style="color:var(--text-dim); font-size:14px;">Configure a mission scenario and get a simulated risk score, predicted flame behavior, hazards, extinction behavior, and safety considerations — all computed locally in your browser, not by a real NASA AI system.</p>
+    </div>
+    <a class="btn btn-primary" href="ai-analyst.html" style="flex-shrink:0;">Open AI Fire Analyst →</a>
+  </div>
+</section>
+
+
+<section id="risk-ranking" class="wrap reveal">
+  <div class="eyebrow">05 · FIRE RISK RANKING</div>
+  <h2 class="sec-title">Comparative risk across common scenarios</h2>
+  <p class="sec-lede">Composite scores from the same rule-based engine, ranked from most to least concerning. Illustrative / prototype data.</p>
+  <div class="rank-list" id="rankList"></div>
+</section>
+
+<section id="insights" class="wrap reveal">
+  <div class="eyebrow">06 · RESEARCH INSIGHTS</div>
+  <h2 class="sec-title">Key takeaways from two decades of orbital combustion science</h2>
+  <p class="sec-lede">Click a card to jump to the experiment that produced the finding.</p>
+  <div class="insight-grid" id="insightGrid"></div>
+</section>
+
+<section id="data-viz" class="wrap reveal">
+  <div class="eyebrow">07 · DATA VISUALIZATION</div>
+  <h2 class="sec-title">The numbers behind the narrative</h2>
+  <p class="sec-lede">Hand-drawn on HTML Canvas / SVG from illustrative prototype values — filter the experiment explorer above and these stay in sync with fuel selection.</p>
+  <div class="viz-tabs" id="vizTabs"></div>
+  <div class="viz-grid">
+    <div class="viz-single show" id="viz-temp"><div class="viz-card glass"><h4>Flame Temperature Comparison</h4><div class="cap">Peak flame temperature by environment (°C, illustrative)</div><canvas id="chartTemp" width="1000" height="360"></canvas></div></div>
+    <div class="viz-single" id="viz-burn"><div class="viz-card glass"><h4>Burning Rate Comparison</h4><div class="cap">Relative fuel regression rate, Earth vs. microgravity (illustrative)</div><canvas id="chartBurn" width="1000" height="360"></canvas></div></div>
+    <div class="viz-single" id="viz-oxy"><div class="viz-card glass"><h4>Oxygen Concentration vs. Flame Behavior</h4><div class="cap">Simulated flame stability index across O₂ concentration</div><canvas id="chartOxy" width="1000" height="360"></canvas></div></div>
+    <div class="viz-single" id="viz-radar"><div class="viz-card glass"><h4>Risk-Factor Radar</h4><div class="cap">Six-factor risk profile, Earth vs. microgravity (illustrative)</div><canvas id="chartRadar" width="640" height="440"></canvas></div></div>
+    <div class="viz-single" id="viz-exp"><div class="viz-card glass"><h4>Experiment Comparison</h4><div class="cap">Relative fire-safety risk level by experiment</div><canvas id="chartExp" width="1000" height="420"></canvas></div></div>
+    <div class="viz-single" id="viz-timeline"><div class="viz-card glass"><h4>Timeline of NASA / JAXA Combustion Research</h4><div class="cap">Flight campaigns, 2008–2022</div><canvas id="chartTimeline" width="1000" height="260"></canvas></div></div>
+  </div>
+</section>
+
+<section id="moon-mars" class="wrap reveal">
+  <div class="eyebrow">08 · MOON VS MARS FIRE SAFETY</div>
+  <h2 class="sec-title">Two very different habitats, two different fire problems</h2>
+  <p class="sec-lede">Adjust conditions on either card and the same AI engine re-estimates risk for that world.</p>
+  <div class="mm-grid">
+    <div class="mm-card moon glass">
+      <span class="badge">MOON · 0.16g</span>
+      <h3>Lunar Surface Habitat</h3>
+      <p class="desc">A sealed, pressurized habitat in a vacuum environment with regolith dust and extreme thermal swings.</p>
+      <ul class="mm-facts">
+        <li>Gravity: 0.16g — partial buoyancy, distorted flame plumes</li>
+        <li>Atmosphere: sealed habitat, no external oxygen source</li>
+        <li>Hazard: abrasive dust can coat detectors and clog filters</li>
+      </ul>
+      <div class="field"><label>Habitat oxygen level</label>
+        <select class="mm-select" data-planet="moon" data-var="oxy">
+          <option value="21">21% — Earth-normal mix</option>
+          <option value="30">30% — reduced-pressure design</option>
+          <option value="34">34% — low-pressure pure-ish O₂</option>
+        </select>
+      </div>
+      <div class="field"><label>Enclosure</label>
+        <select class="mm-select" data-planet="moon" data-var="enc">
+          <option value="sealed" selected>Sealed habitat module</option>
+          <option value="partial">Partially enclosed workshop bay</option>
+        </select>
+      </div>
+      <button class="btn btn-ghost btn-sm mm-run" data-planet="moon">Update analysis</button>
+      <div class="mm-result" id="moonResult">Run the analysis to see the simulated risk assessment for the lunar habitat.</div>
+    </div>
+    <div class="mm-card mars glass">
+      <span class="badge">MARS · 0.38g</span>
+      <h3>Martian Surface Habitat</h3>
+      <p class="desc">Higher gravity than the Moon but still far below Earth's, with a thin CO₂ atmosphere outside the hab.</p>
+      <ul class="mm-facts">
+        <li>Gravity: 0.38g — partial buoyancy restores some convection</li>
+        <li>Atmosphere: 95% CO₂ outside; artificial mix inside habitat</li>
+        <li>Hazard: dust storms can affect external systems and airlocks</li>
+      </ul>
+      <div class="field"><label>Habitat oxygen level</label>
+        <select class="mm-select" data-planet="mars" data-var="oxy">
+          <option value="21">21% — Earth-normal mix</option>
+          <option value="26">26% — moderate enrichment</option>
+          <option value="32">32% — high enrichment</option>
+        </select>
+      </div>
+      <div class="field"><label>Enclosure</label>
+        <select class="mm-select" data-planet="mars" data-var="enc">
+          <option value="sealed" selected>Sealed habitat module</option>
+          <option value="partial">Partially enclosed workshop bay</option>
+        </select>
+      </div>
+      <button class="btn btn-ghost btn-sm mm-run" data-planet="mars">Update analysis</button>
+      <div class="mm-result" id="marsResult">Run the analysis to see the simulated risk assessment for the Martian habitat.</div>
+    </div>
+  </div>
+</section>
+
+<section id="knowledge-map" class="wrap reveal">
+  <div class="eyebrow">09 · INTERACTIVE KNOWLEDGE MAP</div>
+  <h2 class="sec-title">How the research connects</h2>
+  <p class="sec-lede">Click any node to trace its connections across experiments, effects, hazards, and destinations.</p>
+  <div class="map-wrap glass">
+    <svg id="knowledge-svg" viewBox="0 0 900 520"></svg>
+    <div class="map-info" id="mapInfo"></div>
+  </div>
+  <div class="map-legend" id="mapLegend"></div>
+</section>
+
+<footer>
+  <div class="fname">FLAME IN FREEFALL</div>
+  <div class="fsub">NASA SPACE APPS CHALLENGE PROTOTYPE · BUILT WITH HTML / CSS / VANILLA JS · NO BACKEND</div>
+</footer>
+</main>
+
+<div id="modal-root"></div>
+<div id="toast-container"></div>
+<script src="app.js"></script>
+</body>
+</html>

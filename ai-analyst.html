@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Fire Safety Analyst — Flame in Freefall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="starfield"><canvas id="stars-canvas"></canvas></div>
+
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-brand"><span class="dot"></span> MISSION CONSOLE // FIF-01</div>
+  </div>
+  <div class="hud-mid">
+    <div class="hud-stat"><span class="led"></span> ISS TELEMETRY LINK: NOMINAL</div>
+    <div class="hud-stat"><span class="led"></span> DATASET: 8 EXPERIMENTS LOADED</div>
+    <div class="hud-stat"><span class="led" style="background:var(--flame-2); box-shadow:0 0 6px var(--flame-2);"></span> AI ENGINE: LOCAL / RULE-BASED</div>
+  </div>
+  <div class="hud-right" id="missionClock">T+00:00:00</div>
+</div>
+
+<nav class="navbar">
+  <a class="nav-pill" href="index.html">Home</a>
+  <a class="nav-pill" href="index.html#overview">Overview</a>
+  <a class="nav-pill" href="index.html#experiments">Experiments</a>
+  <a class="nav-pill" href="index.html#comparison">Comparison</a>
+  <a class="nav-pill accent" href="ai-analyst.html">AI Fire Analyst</a>
+  <a class="nav-pill" href="index.html#data-viz">Data</a>
+  <a class="nav-pill" href="index.html#moon-mars">Moon vs Mars</a>
+  <a class="nav-pill" href="index.html#knowledge-map">Knowledge Map</a>
+  <a class="nav-pill accent cyan" href="sources.html">Sources &amp; Team</a>
+</nav>
+
+<main>
+<section class="wrap page-hero">
+  <div class="breadcrumb"><a href="index.html">← Mission Console</a> / AI Fire Safety Analyst</div>
+  <div class="eyebrow">AI FIRE SAFETY ANALYST</div>
+  <h1>Run a scenario through the local analysis engine</h1>
+  <p>Set the mission environment, fuel, oxygen concentration, airflow, and enclosure conditions below. A rule-based JavaScript model — not a real NASA system — estimates a fire-risk profile, predicted flame behavior, hazards, and related NASA/JAXA experiments.</p>
+</section>
+
+<section class="wrap" style="padding-top:0;">
+  <div class="ai-panel ai-page-panel">
+    <div class="ai-form glass">
+      <div class="field">
+        <label>Mission environment</label>
+        <select id="f-env">
+          <option value="earth">Earth — baseline</option>
+          <option value="micro" selected>Microgravity — ISS / transit</option>
+          <option value="lunar">Lunar surface — 0.16g</option>
+          <option value="martian">Martian surface — 0.38g</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Fuel type</label>
+        <select id="f-fuel">
+          <option value="cellulose">Solid — cellulose / fabric</option>
+          <option value="composite">Solid — composite panel</option>
+          <option value="droplet">Liquid droplet (e.g. fuel spill)</option>
+          <option value="gas">Gaseous leak</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Oxygen concentration — <span class="range-val" id="v-oxy">21%</span></label>
+        <input type="range" id="f-oxy" min="16" max="45" value="21">
+      </div>
+      <div class="field">
+        <label>Airflow / ventilation</label>
+        <select id="f-air">
+          <option value="none">None — stagnant air</option>
+          <option value="low" selected>Low — passive circulation</option>
+          <option value="moderate">Moderate — fan-driven</option>
+          <option value="high">High — forced ventilation</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Enclosure type</label>
+        <select id="f-enc">
+          <option value="open">Open bay</option>
+          <option value="partial" selected>Partially enclosed rack</option>
+          <option value="sealed">Sealed module</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="runAiBtn" style="width:100%; justify-content:center; margin-top:6px;">Run AI Analysis</button>
+      <div class="ai-note">⚠️ Illustrative rule-based output for this prototype only — not a verified NASA hazard assessment. See the <a href="sources.html" style="color:var(--cyan);">Sources &amp; Team</a> page for details.</div>
+    </div>
+    <div class="ai-output glass">
+      <div class="ai-output-head">
+        <div class="ai-label">AI SIMULATION / RESEARCH ASSISTANT</div>
+        <div class="risk-badge" id="aiRiskBadge" style="display:none;"></div>
+      </div>
+      <div class="ai-body" id="aiBody">
+        <div class="ai-placeholder">Configure a scenario and run the analysis to generate a simulated fire-safety assessment. Output is illustrative, not an official NASA hazard determination.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">FLAME IN FREEFALL</div>
+  <div class="fsub">NASA SPACE APPS CHALLENGE PROTOTYPE · BUILT WITH HTML / CSS / VANILLA JS · NO BACKEND</div>
+</footer>
+</main>
+
+<div id="modal-root"></div>
+<div id="toast-container"></div>
+<script src="app.js"></script>
+</body>
+</html>

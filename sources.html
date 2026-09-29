@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sources &amp; Team — Flame in Freefall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="starfield"><canvas id="stars-canvas"></canvas></div>
+
+<div class="hud-bar">
+  <div class="hud-left">
+    <div class="hud-brand"><span class="dot"></span> MISSION CONSOLE // FIF-01</div>
+  </div>
+  <div class="hud-mid">
+    <div class="hud-stat"><span class="led"></span> ISS TELEMETRY LINK: NOMINAL</div>
+    <div class="hud-stat"><span class="led"></span> DATASET: 8 EXPERIMENTS LOADED</div>
+    <div class="hud-stat"><span class="led" style="background:var(--flame-2); box-shadow:0 0 6px var(--flame-2);"></span> AI ENGINE: LOCAL / RULE-BASED</div>
+  </div>
+  <div class="hud-right" id="missionClock">T+00:00:00</div>
+</div>
+
+<nav class="navbar">
+  <a class="nav-pill" href="index.html">Home</a>
+  <a class="nav-pill" href="index.html#overview">Overview</a>
+  <a class="nav-pill" href="index.html#experiments">Experiments</a>
+  <a class="nav-pill" href="index.html#comparison">Comparison</a>
+  <a class="nav-pill accent" href="ai-analyst.html">AI Fire Analyst</a>
+  <a class="nav-pill" href="index.html#data-viz">Data</a>
+  <a class="nav-pill" href="index.html#moon-mars">Moon vs Mars</a>
+  <a class="nav-pill" href="index.html#knowledge-map">Knowledge Map</a>
+  <a class="nav-pill accent cyan" href="sources.html">Sources &amp; Team</a>
+</nav>
+
+<main>
+<section class="wrap page-hero">
+  <div class="breadcrumb"><a href="index.html">← Mission Console</a> / Sources &amp; Team</div>
+  <div class="eyebrow">SOURCES, RESEARCH &amp; PROJECT TEAM</div>
+  <h1>Where this data comes from — and who built it</h1>
+  <p>This page separates official NASA/JAXA research from the prototype's own illustrative data, AI-generated interpretation, and the project team's original analysis — plus the six-person team behind this NASA Space Apps Challenge submission.</p>
+</section>
+
+<section class="wrap" style="padding-top:0;">
+  <div class="src-grid">
+    <div class="src-card glass">
+      <h4><span class="src-dot" style="background:var(--safe);"></span>NASA / JAXA Research (referenced)</h4>
+      <ul class="src-list" id="srcNasa"></ul>
+    </div>
+    <div class="src-card glass">
+      <h4><span class="src-dot" style="background:var(--cyan);"></span>Experiment Data (this prototype)</h4>
+      <ul class="src-list">
+        <li><span class="lbl">Experiment summaries</span>Descriptive text written by the project team based on publicly known mission names and objectives — illustrative, not verbatim NASA copy.</li>
+        <li><span class="lbl">Numeric values in charts</span>Scientifically-reasonable placeholder figures for demonstration purposes only.</li>
+      </ul>
+    </div>
+    <div class="src-card glass">
+      <h4><span class="src-dot" style="background:var(--flame-2);"></span>AI-Generated Interpretation</h4>
+      <ul class="src-list">
+        <li><span class="lbl">AI Fire Safety Analyst</span>All output is produced locally by a rule-based JavaScript function, not a trained model connected to NASA systems.</li>
+        <li><span class="lbl">Risk scores &amp; rankings</span>Derived from simple weighted heuristics for demonstration, not validated hazard models.</li>
+      </ul>
+    </div>
+    <div class="src-card glass">
+      <h4><span class="src-dot" style="background:#c9cfe0;"></span>Project Team's Analysis</h4>
+      <ul class="src-list">
+        <li><span class="lbl">Section framing &amp; comparisons</span>Written by the Space Apps project team to make the research accessible.</li>
+        <li><span class="lbl">Moon / Mars scenarios</span>Team-authored illustrative habitat conditions, not mission-specific engineering data.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="disclaimer-banner">⚠️ <div>Simulated and illustrative values throughout this dashboard are clearly a <strong>Prototype / Illustrative Data</strong> product for the NASA Space Apps Challenge and should never be treated as verified NASA flight measurements or official safety guidance.</div></div>
+</section>
+
+<section class="wrap reveal" style="padding-top:20px;">
+  <div class="eyebrow">PROJECT TEAM</div>
+  <h2 class="sec-title">The six people behind Flame in Freefall</h2>
+  <p class="sec-lede">Built for the NASA Space Apps Challenge. Replace these placeholder names and roles with your actual team roster before submission.</p>
+  <div class="team-grid" id="teamGrid"></div>
+  <div class="team-note">Note: names, roles, and bios above are placeholders generated for this prototype — swap in your real team's details.</div>
+</section>
+
+<footer>
+  <div class="fname">FLAME IN FREEFALL</div>
+  <div class="fsub">NASA SPACE APPS CHALLENGE PROTOTYPE · BUILT WITH HTML / CSS / VANILLA JS · NO BACKEND</div>
+</footer>
+</main>
+
+<div id="modal-root"></div>
+<div id="toast-container"></div>
+<script src="app.js"></script>
+</body>
+</html>
